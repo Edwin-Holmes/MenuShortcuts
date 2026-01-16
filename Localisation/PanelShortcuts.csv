@@ -1,0 +1,51 @@
+;meta[language=en]
+; id      |key(hex)|key(str)| text
+;
+; comment lines use ; as first character
+; all comment lines (except the two line header) will be ignored
+;
+2111542000|        ||This string is accessible only by its id 2111542000
+;
+; w3strings.exe --encode CombatResources.w3strings.csv --force-ignore-id-space-check-i-know-what-i-am-doing
+; example: key strings, useable characters: a-z0-9_       id=0616
+;
+; Main Menu
+2111542001||panel_Mods|Mods
+; Mod Menu
+2111542002||panel_Panel_Shortcuts|Menu Shortcuts
+2111542003||preset_mods_Panel_Shortcuts|Configure Button Mappings
+2111542004||preset_value_Panel_Shortcuts_Default|Default
+2111542005||option_Shortcut|Shortcut
+2111542006||Option_Enable_Up|Enable Shortcut for D-Pad Up
+2111542007||Option_Enable_Down|Enable Shortcut for D-Pad Down
+2111542008||Option_Enable_Left|Enable Shortcut for D-Pad Left
+2111542009||Option_Enable_Right|Enable Shortcut for D-Pad Right
+2111542010||Option_Enable_LeftThumb|Enable Shortcut for Left Thumbstick
+2111542011||Option_Enable_RightThumb|Enable Shortcut for Right Thumbstick
+2111542012||Option_Enable_LeftShoulder|Enable Shortcut for Left Shoulder
+2111542013||Option_Enable_RightShoulder|Enable Shortcut for Right Shoulder
+2111542014||Option_Enable_Start|Enable Shortcut for Start
+2111542015||Option_Enable_Select|Enable Shortcut for Select
+2111542016||Option_Combat_Disable|Disable Shortcut During Combat
+; Options Array Values
+2111542017||preset_value_Inventory|Inventory
+2111542018||preset_value_Map|Map
+2111542019||preset_value_Journal|Journal
+2111542020||preset_value_Character|Character (Abilities)
+2111542021||preset_value_GwentDeck|Gwent Decks
+2111542022||preset_value_Bestiary|Bestiary
+2111542023||preset_value_Encyclopedia|Characters (Encyclopedia)
+2111542024||preset_value_Alchemy|Alchemy
+2111542025||preset_value_Crafting|Crafting
+2111542026||preset_value_Meditation|Meditation
+2111542027||preset_value_Books|Books
+2111542028||preset_value_FriendlyInventory|[Friendly Stash] Inventory
+2111542029||preset_value_HorseStash|[Friendly Stash] Horse Stash
+2111542030||preset_value_ToggleHood|[Hoods] Toggle Hood
+2111542031||preset_value_ToggleVanity|[Toggle Cloaks] Toggle Item
+2111542032||preset_value_ToggleEssentials|[FHUD] Toggle Essentials
+2111542033||preset_value_Toggle3DMarkers|[FHUD] Toggle 3D Markers
+2111542034||preset_value_ToggleRoadFollow|[IHC] Toggle Road Follow
+2111542035||preset_value_Taunt|[SCAAR] Taunt
+2111542036||preset_value_ToggleIEAutoWalk|[IE] Toggle Auto Walk
+2111542037||preset_value_ToggleActionLog|[Action Log] Toggle Action Log
