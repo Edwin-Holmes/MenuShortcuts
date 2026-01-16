@@ -4,7 +4,6 @@
 .github/*.md
 
 # --- WitcherScript specific ---
-*.w3strings
 witcherscript.toml
 Encode_Strings.bat
 Notebook/
