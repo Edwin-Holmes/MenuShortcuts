@@ -1,7 +1,7 @@
 # --- VS Code & GitHub metadata ---
 *.code-workspace
 .vscode/
-.GitHub/
+.github/*.md
 
 # --- WitcherScript specific ---
 *.w3strings
