@@ -63,6 +63,7 @@ class CPanelShortcut extends CObject {
         AddShortcut('Taunt', false);                      // 18
         AddShortcut('ToggleIEAutoWalk', false);           // 19
         AddShortcut('ToggleActionLog', false);            // 20
+        AddShortcut('ToggleIEFollowRoad', false);         // 21
 
         modMenu = theGame.GetInGameConfigWrapper();       // Menu shorthand
 
@@ -122,6 +123,7 @@ class CPanelShortcut extends CObject {
         ValidateShortcuts('ToggleRoadFollow', 'IHCAddon', "Shortcut disabled: IHC addon not installed.");
         ValidateShortcuts('Taunt', 'SCAARAddon', "Shortcut disabled: SCAAR addon not installed");
         ValidateShortcuts('ToggleIEAutoWalk', 'ImmersiveExplorationAddon', "Shortcut disabled: IE addon not installed");
+        ValidateShortcuts('ToggleIEFollowRoad', 'ImmersiveExplorationAddon', "Shortcut disabled: IE addon not installed");
         ValidateShortcuts('ToggleActionLog', 'ActionLogAddon', "Shortcut disabled: Action Log addon not installed");
     }
 
@@ -720,7 +722,7 @@ public var panelShortcut : CPanelShortcut;                                      
 function MPS_SetDefaults() 
 {
     var modMenu: CInGameConfigWrapper = theGame.GetInGameConfigWrapper();
-    var currentVersion: float = 1.8;
+    var currentVersion: float = 1.81;
     var userVersion: float = StringToFloat(modMenu.GetVarValue('PanelShortcuts', 'PanelShortcutsVersion'), 0.0);
 
     if (userVersion == currentVersion) {                                            // Up to date = early exit
