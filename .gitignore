@@ -1,7 +1,8 @@
 # --- VS Code & GitHub metadata ---
 *.code-workspace
 .vscode/
-.github/*.md
+copilot-instructions.md
+LatentFunctions.md
 
 # --- WitcherScript specific ---
 witcherscript.toml
@@ -28,3 +29,5 @@ ehthumbs.db
 obj/
 dist/
 out/
+
+*.zip
