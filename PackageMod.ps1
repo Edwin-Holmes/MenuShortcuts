@@ -2,8 +2,9 @@ $workspaceRoot = Get-Location
 $workspaceName = Split-Path -Leaf $workspaceRoot
 $modName       = "mod$workspaceName"
 
-$buildRoot = "C:\Users\ashle\Documents\Witcher 3 Script Mod\Temp\$workspaceName"
-$zipPath   = "C:\Users\ashle\Documents\Witcher 3 Script Mod\Temp\$workspaceName.zip"
+# Repo-local Temp folder
+$buildRoot = "$workspaceRoot\Temp\$workspaceName"
+$zipPath   = "$workspaceRoot\Temp\$workspaceName.zip"
 
 # Prompt if zip already exists
 if (Test-Path $zipPath) {
@@ -67,6 +68,3 @@ Write-Host "Packaged $zipPath successfully!"
 
 # Remove staging folder now that zip is created
 Remove-Item $buildRoot -Recurse -Force
-
-# Open the Temp folder in Explorer
-Start-Process explorer.exe "C:\Users\ashle\Documents\Witcher 3 Script Mod\Temp"
