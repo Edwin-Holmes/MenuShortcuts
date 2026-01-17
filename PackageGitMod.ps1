@@ -1,53 +1,51 @@
+# PackageMod.ps1
+# Builds Witcher-style mod structure and outputs a zip in project root
+# Cleans up the structured folder after packaging
+
 $workspaceRoot = Get-Location
 $workspaceName = Split-Path -Leaf $workspaceRoot
 $modName       = "mod$workspaceName"
 
-# Repo-local Temp folder
-$buildRoot = "$workspaceRoot\Temp\$workspaceName"
-$zipPath   = "$workspaceRoot\Temp\$workspaceName.zip"
+# Paths
+$buildRoot = "$workspaceRoot\$modName"
+$zipPath   = "$workspaceRoot\$workspaceName.zip"
 
-# Prompt if zip already exists
+# Remove old zip if present
 if (Test-Path $zipPath) {
-    $response = Read-Host "File $zipPath already exists. Overwrite? (y/n)"
-    if ($response -ne "y") {
-        Write-Host "Aborted packaging."
-        exit
-    }
     Remove-Item $zipPath -Force
 }
 
-# Paths
+# Define structure paths
 $binPath     = "$buildRoot\bin\config\r4game\user_config_matrix\pc"
 $modPath     = "$buildRoot\mods\$modName"
 $contentPath = "$modPath\content"
 
-# Clean staging area
-if (Test-Path $buildRoot) { Remove-Item $buildRoot -Recurse -Force }
+# Ensure base directories exist
 New-Item -Force -ItemType Directory -Path $contentPath | Out-Null
 
-# Define exclusion rule
+# Exclusion rule
 function NotIgnored($item) {
     return ($item.FullName -notmatch '\\Ignored\\')
 }
 
-# Copy scripts folder exactly as-is, excluding Ignored
+# Copy scripts folder (excluding Ignored)
 Get-ChildItem "$workspaceRoot\scripts" -Recurse | Where-Object { NotIgnored $_ } | ForEach-Object {
     $dest = $_.FullName.Replace($workspaceRoot, $contentPath)
     New-Item -ItemType Directory -Force -Path (Split-Path $dest) | Out-Null
     Copy-Item $_.FullName $dest -Force
 }
 
-# Copy w3strings (search anywhere), excluding Ignored
+# Copy w3strings (excluding Ignored)
 Get-ChildItem $workspaceRoot -Recurse -Filter *.w3strings | Where-Object { NotIgnored $_ } | ForEach-Object {
     Copy-Item $_.FullName $contentPath
 }
 
-# Copy *.settings.txt (search anywhere), excluding Ignored
+# Copy *.settings.txt (excluding Ignored)
 Get-ChildItem $workspaceRoot -Recurse -Filter *.settings.txt | Where-Object { NotIgnored $_ } | ForEach-Object {
     Copy-Item $_.FullName $modPath
 }
 
-# Copy XMLs (search anywhere), excluding Ignored
+# Copy XMLs (excluding Ignored)
 $xmlFiles = Get-ChildItem $workspaceRoot -Recurse -Filter *.xml | Where-Object { NotIgnored $_ }
 if ($xmlFiles) {
     New-Item -Force -ItemType Directory -Path $binPath | Out-Null
@@ -56,15 +54,15 @@ if ($xmlFiles) {
     }
 }
 
-# Remove empty bin if created but unused
+# Remove empty bin if unused
 if ((Test-Path $binPath) -and (-not (Get-ChildItem $binPath -Recurse))) {
     Remove-Item "$buildRoot\bin" -Recurse -Force
 }
 
-# Zip only the staged buildRoot contents
+# Zip the structured mod folder
 Compress-Archive -Path "$buildRoot\*" -DestinationPath $zipPath -Force
 
 Write-Host "Packaged $zipPath successfully!"
 
-# Remove staging folder now that zip is created
+# Clean up the structured folder, leaving only the zip
 Remove-Item $buildRoot -Recurse -Force
