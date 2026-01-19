@@ -8,6 +8,8 @@ IK_Pad_LeftThumb=(Action=Panel_Shortcut_LeftThumb)
 IK_Pad_RightThumb=(Action=Panel_Shortcut_RightThumb)
 IK_Pad_LeftShoulder=(Action=Panel_Shortcut_LeftShoulder)
 IK_Pad_RightShoulder=(Action=Panel_Shortcut_RightShoulder)
+IK_Pad_Start=(Action=Panel_Shortcut_Start)
+IK_Pad_Back_Select=(Action=Panel_Shortcut_Select)
 
 [FastMenu]
 IK_Pad_RightTrigger=(Action=Panel_Shortcut_Hold)
@@ -19,6 +21,8 @@ IK_Pad_LeftThumb=(Action=Panel_Shortcut_LeftThumb)
 IK_Pad_RightThumb=(Action=Panel_Shortcut_RightThumb)
 IK_Pad_LeftShoulder=(Action=Panel_Shortcut_LeftShoulder)
 IK_Pad_RightShoulder=(Action=Panel_Shortcut_RightShoulder)
+IK_Pad_Start=(Action=Panel_Shortcut_Start)
+IK_Pad_Back_Select=(Action=Panel_Shortcut_Select)
 
 [BASE_PanelsShortcuts]
 IK_Pad_RightTrigger=(Action=Panel_Shortcut_Hold)
@@ -30,6 +34,8 @@ IK_Pad_LeftThumb=(Action=Panel_Shortcut_LeftThumb)
 IK_Pad_RightThumb=(Action=Panel_Shortcut_RightThumb)
 IK_Pad_LeftShoulder=(Action=Panel_Shortcut_LeftShoulder)
 IK_Pad_RightShoulder=(Action=Panel_Shortcut_RightShoulder)
+IK_Pad_Start=(Action=Panel_Shortcut_Start)
+IK_Pad_Back_Select=(Action=Panel_Shortcut_Select)
 
 [Boat]
 IK_Pad_RightTrigger=(Action=Panel_Shortcut_Hold)
@@ -41,6 +47,8 @@ IK_Pad_LeftThumb=(Action=Panel_Shortcut_LeftThumb)
 IK_Pad_RightThumb=(Action=Panel_Shortcut_RightThumb)
 IK_Pad_LeftShoulder=(Action=Panel_Shortcut_LeftShoulder)
 IK_Pad_RightShoulder=(Action=Panel_Shortcut_RightShoulder)
+IK_Pad_Start=(Action=Panel_Shortcut_Start)
+IK_Pad_Back_Select=(Action=Panel_Shortcut_Select)
 
 [Combat]
 IK_Pad_RightTrigger=(Action=Panel_Shortcut_Hold)
@@ -50,6 +58,8 @@ IK_Pad_DigitDown=(Action=Panel_Shortcut_Down)
 IK_Pad_DigitLeft=(Action=Panel_Shortcut_Left)
 IK_Pad_LeftShoulder=(Action=Panel_Shortcut_LeftShoulder)
 IK_Pad_RightShoulder=(Action=Panel_Shortcut_RightShoulder)
+IK_Pad_Start=(Action=Panel_Shortcut_Start)
+IK_Pad_Back_Select=(Action=Panel_Shortcut_Select)
 
 [Exploration]
 IK_Pad_RightTrigger=(Action=Panel_Shortcut_Hold)
@@ -61,6 +71,8 @@ IK_Pad_LeftThumb=(Action=Panel_Shortcut_LeftThumb)
 IK_Pad_RightThumb=(Action=Panel_Shortcut_RightThumb)
 IK_Pad_LeftShoulder=(Action=Panel_Shortcut_LeftShoulder)
 IK_Pad_RightShoulder=(Action=Panel_Shortcut_RightShoulder)
+IK_Pad_Start=(Action=Panel_Shortcut_Start)
+IK_Pad_Back_Select=(Action=Panel_Shortcut_Select)
 
 [Horse]
 IK_Pad_RightTrigger=(Action=Panel_Shortcut_Hold)
@@ -72,6 +84,8 @@ IK_Pad_LeftThumb=(Action=Panel_Shortcut_LeftThumb)
 IK_Pad_RightThumb=(Action=Panel_Shortcut_RightThumb)
 IK_Pad_LeftShoulder=(Action=Panel_Shortcut_LeftShoulder)
 IK_Pad_RightShoulder=(Action=Panel_Shortcut_RightShoulder)
+IK_Pad_Start=(Action=Panel_Shortcut_Start)
+IK_Pad_Back_Select=(Action=Panel_Shortcut_Select)
 
 [Swimming]
 IK_Pad_RightTrigger=(Action=Panel_Shortcut_Hold)
@@ -83,6 +97,8 @@ IK_Pad_LeftThumb=(Action=Panel_Shortcut_LeftThumb)
 IK_Pad_RightThumb=(Action=Panel_Shortcut_RightThumb)
 IK_Pad_LeftShoulder=(Action=Panel_Shortcut_LeftShoulder)
 IK_Pad_RightShoulder=(Action=Panel_Shortcut_RightShoulder)
+IK_Pad_Start=(Action=Panel_Shortcut_Start)
+IK_Pad_Back_Select=(Action=Panel_Shortcut_Select)
 
 [Diving]
 IK_Pad_RightTrigger=(Action=Panel_Shortcut_Hold)
@@ -94,3 +110,5 @@ IK_Pad_LeftThumb=(Action=Panel_Shortcut_LeftThumb)
 IK_Pad_RightThumb=(Action=Panel_Shortcut_RightThumb)
 IK_Pad_LeftShoulder=(Action=Panel_Shortcut_LeftShoulder)
 IK_Pad_RightShoulder=(Action=Panel_Shortcut_RightShoulder)
+IK_Pad_Start=(Action=Panel_Shortcut_Start)
+IK_Pad_Back_Select=(Action=Panel_Shortcut_Select)
