@@ -7,8 +7,6 @@ enum EShortcutButton {
     ESB_RightThumb,
     ESB_LeftShoulder,
     ESB_RightShoulder
-//    ESB_Start,            // Cannot get events to fire
-//    ESB_Select
 }
 
 struct SLookupDetails {
@@ -32,14 +30,11 @@ class CPanelShortcut extends CObject {
     private var openedMenu: name; default openedMenu = '';
     private var openedWithBackground: bool;
     private var upEnabled, downEnabled, leftEnabled, rightEnabled, 
-                leftThumbEnabled, rightThumbEnabled, leftShoulderEnabled, rightShoulderEnabled/*,
-                startEnabled, selectEnabled*/: bool;
+                leftThumbEnabled, rightThumbEnabled, leftShoulderEnabled, rightShoulderEnabled: bool;
     private var upCombatDisabled, downCombatDisabled, leftCombatDisabled, rightCombatDisabled, 
-                leftThumbCombatDisabled, rightThumbCombatDisabled, leftShoulderCombatDisabled, rightShoulderCombatDisabled/*,
-                startCombatDisabled, selectCombatDisabled*/: bool;
+                leftThumbCombatDisabled, rightThumbCombatDisabled, leftShoulderCombatDisabled, rightShoulderCombatDisabled: bool;
     private var upTarget, downTarget, leftTarget, rightTarget, 
-                leftThumbTarget, rightThumbTarget, leftShoulderTarget, rightShoulderTarget/*,
-                startTarget, selectTarget*/: SLookupDetails; 
+                leftThumbTarget, rightThumbTarget, leftShoulderTarget, rightShoulderTarget: SLookupDetails; 
 
     private function Init() {                             // Populate action name array
         AddShortcut('InventoryMenu', true);               // 0
@@ -78,8 +73,6 @@ class CPanelShortcut extends CObject {
         rightThumbEnabled       = modMenu.GetVarValue('PanelShortcuts', 'EnableRightThumb');
         leftShoulderEnabled     = modMenu.GetVarValue('PanelShortcuts', 'EnableLeftShoulder');
         rightShoulderEnabled    = modMenu.GetVarValue('PanelShortcuts', 'EnableRightShoulder');
-//        startEnabled            = modMenu.GetVarValue('PanelShortcuts', 'EnableStart');
-//        selectEnabled           = modMenu.GetVarValue('PanelShortcuts', 'EnableSelect');
 
         upCombatDisabled            = modMenu.GetVarValue('PanelShortcuts', 'CombatDisableUp');
         downCombatDisabled          = modMenu.GetVarValue('PanelShortcuts', 'CombatDisableDown');
@@ -89,9 +82,6 @@ class CPanelShortcut extends CObject {
         rightThumbCombatDisabled    = modMenu.GetVarValue('PanelShortcuts', 'CombatDisableRightThumb');
         leftShoulderCombatDisabled  = modMenu.GetVarValue('PanelShortcuts', 'CombatDisableLeftShoulder');
         rightShoulderCombatDisabled = modMenu.GetVarValue('PanelShortcuts', 'CombatDisableRightShoulder');
-//        startCombatDisabled         = modMenu.GetVarValue('PanelShortcuts', 'CombatDisableStart');
-//        selectCombatDisabled        = modMenu.GetVarValue('PanelShortcuts', 'CombatDisableSelect');
-
 
         upTarget            = shortcutLookup[StringToInt(modMenu.GetVarValue('PanelShortcuts', 'ShortcutUp'))];
         downTarget          = shortcutLookup[StringToInt(modMenu.GetVarValue('PanelShortcuts', 'ShortcutDown'))];
@@ -101,8 +91,6 @@ class CPanelShortcut extends CObject {
         rightThumbTarget    = shortcutLookup[StringToInt(modMenu.GetVarValue('PanelShortcuts', 'ShortcutRightThumb'))];
         leftShoulderTarget  = shortcutLookup[StringToInt(modMenu.GetVarValue('PanelShortcuts', 'ShortcutLeftShoulder'))];
         rightShoulderTarget = shortcutLookup[StringToInt(modMenu.GetVarValue('PanelShortcuts', 'ShortcutRightShoulder'))];
-//        startTarget         = shortcutLookup[StringToInt(modMenu.GetVarValue('PanelShortcuts', 'ShortcutStart'))];
-//        selectTarget        = shortcutLookup[StringToInt(modMenu.GetVarValue('PanelShortcuts', 'ShortcutSelect'))];
 
         DisableInvalidShortcuts();                                  
     }
@@ -140,8 +128,6 @@ class CPanelShortcut extends CObject {
         theInput.RegisterListener(this, 'OnShortcutRightThumb',     'Panel_Shortcut_RightThumb');
         theInput.RegisterListener(this, 'OnShortcutLeftShoulder',   'Panel_Shortcut_LeftShoulder');
         theInput.RegisterListener(this, 'OnShortcutRightShoulder',  'Panel_Shortcut_RightShoulder');
-//        theInput.RegisterListener(this, 'OnShortcutStart',          'Panel_Shortcut_Start');
-//        theInput.RegisterListener(this, 'OnShortcutSelect',         'Panel_Shortcut_Select');
     }
 
     event OnToggleHold(action: SInputAction) {
@@ -175,14 +161,6 @@ class CPanelShortcut extends CObject {
     event OnShortcutRightShoulder(action: SInputAction) {
         ProcessShortcut(action, ESB_RightShoulder, rightShoulderTarget, 'Panel_Shortcut_RightShoulder');
     }
-    /*
-    event OnShortcutStart(action: SInputAction) {
-        ProcessShortcut(action, ESB_Start, startTarget, 'Panel_Shortcut_Start');
-    }
-    event OnShortcutSelect(action: SInputAction) {
-        ProcessShortcut(action, ESB_Select, selectTarget, 'Panel_Shortcut_Select');
-    }
-    */
 
     private function ProcessShortcut(action: SInputAction, button: EShortcutButton, shortcut: SLookupDetails, psAction: name) {
     if (ShortcutAllowed(button) && IsPressed(action)) {
@@ -361,17 +339,6 @@ class CPanelShortcut extends CObject {
                 enabled = rightShoulderEnabled;
                 combatDisabled = rightShoulderCombatDisabled;
                 break;
-            /*
-            case ESB_Start:
-                enabled = startEnabled;
-                combatDisabled = startCombatDisabled;
-                break;
-            
-            case ESB_Select:
-                enabled = selectEnabled;
-                combatDisabled = selectCombatDisabled;
-                break;
-            */
             
             default:
                 GetWitcherPlayer().DisplayHudMessage("Button not found:" + button);
@@ -423,16 +390,6 @@ class CPanelShortcut extends CObject {
                 rightShoulderEnabled = false; 
                 wp.DisplayHudMessage(msg); 
             }
-            /*
-            if (startTarget.target == target) { 
-                startEnabled = false; 
-                wp.DisplayHudMessage(msg); 
-            }
-            if (selectTarget.target == target) { 
-                selectEnabled = false; 
-                wp.DisplayHudMessage(msg); 
-            }
-            */
         }
     }
 
@@ -673,43 +630,6 @@ public var panelShortcut : CPanelShortcut;                                      
     }
     return wrappedMethod(action);
 }
-/*
-@wrapMethod(CPlayerInput) function OnFastMenu( action : SInputAction ) {               // These work but I can't get the buttons to trigger their events
-    var ps: CPanelShortcut = GetPanelShortcut();
-
-    if (ps && ps.ShortcutAllowed(ESB_Start)) {
-        return false;
-    }
-    return wrappedMethod(action);
-}
-
-@wrapMethod(CPlayerInput) function OnCommPanelMap( action : SInputAction ) {
-    var ps: CPanelShortcut = GetPanelShortcut();
-
-    if (ps && ps.ShortcutAllowed(ESB_Start)) {
-        return false;
-    }
-    return wrappedMethod(action);
-}
-
-@wrapMethod(CPlayerInput) function OnIngameMenu( action : SInputAction ) {
-    var ps: CPanelShortcut = GetPanelShortcut();
-
-    if (ps && ps.ShortcutAllowed(ESB_Select)) {
-        return false;
-    }
-    return wrappedMethod(action);
-}
-
-@wrapMethod(CPlayerInput) function OnCommHoldFastMenu( action : SInputAction ) {
-    var ps: CPanelShortcut = GetPanelShortcut();
-
-    if (ps && ps.ShortcutAllowed(ESB_Select)) {
-        return false;
-    }
-    return wrappedMethod(action);
-}
-*/
 
 // Set defaults if not user set
 @wrapMethod(CR4Game) function PopulateMenuQueueMainAlways( out menus : array< name > ) {
