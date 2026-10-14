@@ -24,6 +24,7 @@ function GetPanelShortcut(): CPanelShortcut {
 
 class CPanelShortcut extends CObject {
     public var killStatsPopup: bool;
+    private var pendingMenuTarget: name;
     private var panelShortcutHeld: bool;
     private var shortcutLookup: array<SLookupDetails>;
     private var modMenu: CInGameConfigWrapper;
@@ -39,12 +40,12 @@ class CPanelShortcut extends CObject {
         AddShortcut('JournalQuestMenu', true);          // 2
         AddShortcut('CharacterMenuDupe', true);         // 3
         AddShortcut('DeckBuilder', true);               // 4
-        AddShortcut('GlossaryBestiaryMenu', true);      // 5 (Bestiary on release)
+        AddShortcut('GlossaryBestiaryMenu', true);      // 5 
         AddShortcut('GlossaryEncyclopediaMenu', true);  // 6
         AddShortcut('AlchemyMenu', true);               // 7
-        AddShortcut('CraftingMenu', true);              // 8 (Crafting on release)
+        AddShortcut('CraftingMenu', true);              // 8 
         AddShortcut('MeditationClockMenu', true);       // 9
-        AddShortcut('GlossaryBooksMenu', true);         // 10 (Books on release)
+        AddShortcut('GlossaryBooksMenu', true);         // 10 
         AddShortcut('ToggleHood', false);               // 11
         AddShortcut('ToggleVanity', false);             // 12
         AddShortcut('ToggleEssentials', false);         // 13
@@ -102,11 +103,11 @@ class CPanelShortcut extends CObject {
         ValidateShortcuts('ToggleRoadFollow', 'IHCAddon', "Shortcut disabled: IHC addon not installed.");
     }
 
-    public function IsPanelShortcutHeld(): bool { // No longer used but you never know
+    public function IsPanelShortcutHeld(): bool {                   // No longer used but you never know
         return panelShortcutHeld;
     }
 
-    public function StartListening() { // Register listeners
+    public function StartListening() {                              // Register listeners
         Init();
         theInput.RegisterListener(this, 'OnToggleHold', 'Panel_Shortcut_Hold');
         theInput.RegisterListener(this, 'OnShortcutUp', 'Panel_Shortcut_Up');
@@ -120,8 +121,17 @@ class CPanelShortcut extends CObject {
     }
 
     event OnToggleHold(action: SInputAction) {
-        if (IsPressed(action)) panelShortcutHeld = true;
-        else if (IsReleased(action)) panelShortcutHeld = false;
+        if (IsPressed(action)) {
+            panelShortcutHeld = true;
+        }
+
+        else if (IsReleased(action)) {
+            panelShortcutHeld = false;
+            if (pendingMenuTarget != '') {
+                MenuToggle(pendingMenuTarget);
+                pendingMenuTarget = '';
+            }
+        }
     }
 
     event OnShortcutUp(action: SInputAction) {
@@ -159,7 +169,14 @@ class CPanelShortcut extends CObject {
     private function ProcessShortcut(action: SInputAction, button: EShortcutButton, shortcut: SLookupDetails, psAction: name) {
         if (ShortcutAllowed(button) && IsPressed(action)) {
             if (shortcut.isMenu) {
-                MenuToggle(shortcut.target);
+                if (shortcut.target == 'GlossaryBestiaryMenu'
+                 || shortcut.target == 'GlossaryEncyclopediaMenu'
+                 || shortcut.target == 'GlossaryBooksMenu') {
+                    pendingMenuTarget = shortcut.target;
+                }
+                else {
+                    MenuToggle(shortcut.target);
+                }
             }
             else {
                 PerformAction(shortcut.target);
@@ -169,6 +186,14 @@ class CPanelShortcut extends CObject {
     }
 
     private function MenuToggle(menuId: name) {
+    var gui : CR4GuiManager;
+    gui = theGame.GetGuiManager();
+
+    if (openedMenu != '' && !gui.GetRootMenu()) {
+        openedMenu = '';
+        openedWithBackground = false;
+    }
+
         if (openedMenu == menuId) {
             theGame.CloseMenu(menuId);
             if(openedWithBackground) {
@@ -185,9 +210,9 @@ class CPanelShortcut extends CObject {
     }
 
     private function OpenMenu(menuId: name): bool {
-        var allowed: bool = false;
-        var block: EInputActionBlock;
-        
+        var allowed : bool = false;
+        var block   : EInputActionBlock;
+
         switch(menuId) {                                            // Check if action is allowed
             case 'InventoryMenu':
                 allowed = thePlayer.IsActionAllowed(EIAB_OpenInventory);
@@ -218,19 +243,16 @@ class CPanelShortcut extends CObject {
             case 'GlossaryBestiaryMenu':
                 allowed = thePlayer.IsActionAllowed(EIAB_OpenGlossary);
                 block   = EIAB_OpenGlossary;
-                menuId  = 'CraftingMenu';       //Open Crafting; moves to Bestiary on R2 release
                 break;
 
             case 'GlossaryEncyclopediaMenu':
                 allowed = thePlayer.IsActionAllowed(EIAB_OpenGlossary);
                 block   = EIAB_OpenGlossary;
-                menuId  = 'GlossaryTutorialsMenu';
                 break;
 
             case 'GlossaryBooksMenu':
                 allowed = thePlayer.IsActionAllowed(EIAB_OpenGlossary);
                 block   = EIAB_OpenGlossary;
-                menuId  = 'GlossaryEncyclopediaMenu';
                 break;
 
             case 'DeckBuilder':
@@ -246,7 +268,6 @@ class CPanelShortcut extends CObject {
             case 'CraftingMenu':
                 allowed = true;                                     // Vanilla doesn’t block crafting
                 block   = EIAB_Undefined;                           // Fallback; always allowed
-                menuId = 'GlossaryBooksMenu';
                 break;
 
             default:
@@ -274,6 +295,12 @@ class CPanelShortcut extends CObject {
         }
 
         return true;
+    }
+
+    public function ResetMenuTracking() {
+        openedMenu = '';
+        openedWithBackground = false;
+        pendingMenuTarget = '';
     }
 
     private function PerformAction(targetName: name) {  // Mod addons wrap this function.
@@ -412,25 +439,6 @@ class CPanelShortcut extends CObject {
         panelShortcut = NULL;
     }
     return wrappedMethod(damageAction);
-}
-
-// Block character stats popup when inventory opened via shortcut (still not blocking R2 release)
-@wrapMethod(CR4InventoryMenu) function OnShowFullStats() {
-    var ps: CPanelShortcut = GetPanelShortcut();
-
-    if (ps.killStatsPopup) {
-        return false;
-    }
-    return wrappedMethod();
-}
-
-@wrapMethod(CR4InventoryMenu) function OnCloseMenu() {
-    var ps: CPanelShortcut = GetPanelShortcut();
-
-    if (ps) {
-        ps.killStatsPopup = false;
-    }
-    return wrappedMethod();
 }
 
 // Block shortcut inputs when toggle held and enabled in menu
@@ -671,17 +679,4 @@ function MPS_SetDefaults() {
     }
 
     return retVal;
-}
-
-//Protected functions
-@addMethod(CR4CommonMenu) public function MPS_HasMenuDefined(menuName: name): bool {
-    return this.HasMenuDefined(menuName);
-}
-
-@addMethod(CR4CommonMenu) public function MPS_HasMenuWithStateDefined(menuName: name, stateName: name): bool {
-    return this.HasMenuWithStateDefined(menuName, stateName);
-}
-
-@addMethod(CR4CommonMenu) public function MPS_OpenMenuAndCallSetSelectedTab(menuId: name, tabName: string) {
-    return this.OpenMenuAndCallSetSelectedTab(menuId, tabName);
 }
